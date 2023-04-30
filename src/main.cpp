@@ -4,7 +4,6 @@
 voltage v(A0, DC);
 
 void setup() {
-  // put your setup code here, to run once:
   Serial.begin(9600);
   v.setCalibration(0.00488); // random num for temp Calib
   v.autoCalibrate(220); //Voltage Measured on A voltmeter to Calibrate to.
@@ -15,5 +14,4 @@ void setup() {
 void loop() {
   Serial.println((String)v.getVoltage());
   delay(2000);
-  // put your main code here, to run repeatedly:
 }
