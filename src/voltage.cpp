@@ -1,10 +1,11 @@
 #include <voltage.h>
 
+
 void voltage::begin(byte pin){
     pinMode(pin, INPUT);
 }
 
-void voltage::begin(byte pin, byte pin2){
+void voltage::begin(byte pin, byte pin2) {
     pinMode(pin, INPUT);
     pinMode(pin2, INPUT);
 }
@@ -15,21 +16,16 @@ voltage::voltage(byte pin, voltagetype voltagetype){
     _scannum = 1;
     begin(_pin);
 }
-/*
-voltage::voltage(byte pin, voltagetype voltagetype = AC, phase phase = SINGLE){
-    _pin = pin;
-    _voltagetype = voltagetype;
-    _phase = phase;
-    _scannum = 10;
-    begin(_pin);
-}
-*/
 voltage::voltage(byte pin, byte pin2, voltagetype voltagetype, phase phase){
     _pin = pin;
     _pin2 = pin2;
     _voltagetype = voltagetype;
     _phase = phase;
-    _scannum = 10;
+    if(_voltagetype == DC){
+        _scannum = 1;
+    } else {
+        _scannum = 10;
+    }
     begin(_pin, _pin2);
 }
 void voltage::setScan(int scannum){
@@ -41,12 +37,10 @@ int voltage::getScan(){
 void voltage::setCalibration(float calib){
     _calib = calib;
 }
-float voltage::getCalibration() {
+float voltage::getCalibration(){
     return _calib;
 }
-
-float voltage::getVoltage(){
-    //For Single Phase
+float voltage::getVoltage() {
     if(_phase == SINGLE){
         _voltage = 0;
         for(int i = 0; i < _scannum; i++){
@@ -69,10 +63,11 @@ float voltage::getVoltage(){
                 _voltage2 = _tempvoltage2;
             }
         }
-        return (_voltage + _voltage2) * 0.863;
+        return (_voltage + _voltage2) * 0.863; //0.863 is the constant to calculate double phase voltage
     }
 }
 
-void voltage::autoCalibrate(float voltage){
+float voltage::autoCalibrate(float voltage){
     _calib = (voltage / getVoltage()) * _calib;
+    return _calib;
 }

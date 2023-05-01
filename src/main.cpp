@@ -5,13 +5,12 @@ voltage v(A0, DC);
 
 void setup() {
   Serial.begin(9600);
-  v.setCalibration(0.00488); // random num for temp Calib
-  v.autoCalibrate(220); //Voltage Measured on A voltmeter to Calibrate to.
-  Serial.println("Scans Per Cycle:" + (String)v.getScan()/*Get the Number of Scan Cycles*/ 
-          + " | Calibration:" + (String)v.getCalibration()/*Get the Calibration Constant*/);
+  v.setCalibration(0.216); //use some random number 1 > x > 0 for temp Calibration
+  //Serial.println("AutoCalibrate:" + (String)v.autoCalibrate(220)); //220 is the real Voltage we just Checked.
+  Serial.println("Scans: " + (String)v.getScan() + "\n Calibration: " + (String)v.getCalibration());
 }
 
 void loop() {
-  Serial.println((String)v.getVoltage());
-  delay(2000);
+  Serial.println("Voltage: " + (String)v.getVoltage());
+  delay(1000);
 }
