@@ -23,7 +23,7 @@ class voltage {
         //Function to setup pins as input
         void begin(byte pin);
         void begin(byte pin, byte pin2);
-        float getV(byte pin);
+        float getV(byte pin, bool pinNum = false);
     public:
         voltage(byte pin, voltagetype voltagetype = DC); // Initialize DC or AC Single Phase Voltage reading
         voltage(byte pin, byte pin2, voltagetype voltagetype = AC, phase phase = DOUBLE); //Initialize AC Double Phase Voltage Reading

@@ -53,11 +53,11 @@ float voltage::getCalibration(bool pinNum){
         return _calib;
     }
 }
-float voltage::getV(byte pin){
+float voltage::getV(byte pin, bool pinNum){
     float tempv, v;
     v = 0;
     for(int i = 0; i < _scannum; i++){
-        tempv = analogRead(_pin) * _calib;
+        tempv = pinNum ? analogRead(pin) * _calib1 : analogRead(pin) * _calib;
         if(tempv > v){
             v = tempv;
         }
@@ -71,16 +71,16 @@ float voltage::getVoltage() {
         return getV(_pin);
     }
     else {
-        return (getV(_pin) + getV(_pin2)) * 0.863; //0.863 is the constant to calculate double phase voltage
+        return (getV(_pin) + getV(_pin2, true)) * 0.863; //0.863 is the constant to calculate double phase voltage
     }
 }
 
 float voltage::autoCalibrate(float voltage, bool pinNum){
     if(pinNum){
-        _calib1 = (voltage / getV(_pin)) * _calib1;
+        _calib1 = (voltage / getV(_pin, pinNum)) * _calib1;
         return _calib1;
     } else {
-        _calib = (voltage / getV(_pin)) * _calib;
+        _calib = (voltage / getV(_pin, pinNum)) * _calib;
         return _calib;
     }
 }
