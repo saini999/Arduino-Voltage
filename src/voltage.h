@@ -36,4 +36,4 @@ class voltage {
 };
 
 #endif
-//fun :)
+// fun :)
