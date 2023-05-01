@@ -84,3 +84,4 @@ float voltage::autoCalibrate(float voltage, bool pinNum){
         return _calib;
     }
 }
+//fun :)
